@@ -1,7 +1,7 @@
 package com.cagudeloa.memorygame.memoryGame
 
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +9,13 @@ import androidx.databinding.DataBindingUtil
 import com.cagudeloa.memorygame.BaseFragment
 import com.cagudeloa.memorygame.MainActivity
 import com.cagudeloa.memorygame.R
-import com.cagudeloa.memorygame.database.BestScores
-import com.cagudeloa.memorygame.database.BestScoresDB
 import com.cagudeloa.memorygame.databinding.FragmentMemoryBinding
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MemoryFragment : BaseFragment() {
 
     private lateinit var binding: FragmentMemoryBinding
+    private lateinit var sharedPref: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,30 +49,23 @@ class MemoryFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        var bestScores: BestScores?
-        var valueFromDB: String
+        sharedPref = requireActivity().getSharedPreferences("com.cagudeloa.memorygame.score", 0)
+        val data = sharedPref.getString("memory", "0")
         launch {
             context?.let {
-                bestScores = BestScoresDB(it).getBestScoresDao().getBestScores(id=1)
-                if(bestScores != null){
-                    valueFromDB = bestScores!!.score
-                    binding.invalidateAll()
-                    binding.highestScoreText.text = valueFromDB
-                    //Log.v("testing", "From database -> $valueFromDB")
-                }
+                binding.invalidateAll()
+                binding.highestScoreText.text = data
             }
         }
     }
 
     override fun onStop() {
         super.onStop()
-        GlobalScope.launch {
-            val score = binding.highestScoreText.text.toString()
-            val bestScores = BestScores(1, score)
-            context?.let {
-                BestScoresDB(it).getBestScoresDao().addScores(bestScores)
-                //Log.v("testing", "To database -> $bestScores")
-            }
-        }
+        val score = binding.highestScoreText.text.toString()
+        sharedPref = requireActivity().getSharedPreferences("com.cagudeloa.memorygame.score", 0)
+        val editor: SharedPreferences.Editor = sharedPref.edit()
+        editor.apply{
+            editor.putString("memory", score)
+        }.apply()
     }
 }
