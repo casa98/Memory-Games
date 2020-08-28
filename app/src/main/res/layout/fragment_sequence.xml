@@ -383,7 +383,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/squares_label_text"
             app:layout_constraintTop_toBottomOf="@+id/square_text23"
-            app:layout_constraintVertical_bias="0.633" />
+            app:layout_constraintVertical_bias="0.52" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

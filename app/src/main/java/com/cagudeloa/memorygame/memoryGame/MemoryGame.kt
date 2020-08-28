@@ -24,7 +24,8 @@ class MemoryGame(
     private val countDownInterval: Long = 1000
 
     // View binding for Scores
-    private val score = Score("200", "0")
+    private val initialScore = "100"
+    private val score = Score(initialScore, "0")
 
     // Other values
     private var imageCounter: Int =
@@ -221,7 +222,7 @@ class MemoryGame(
                 if ((binding.scoreText.text.toString().toInt() - 20) <= 0) {
                     gameOverDialog()
                     binding.invalidateAll()
-                    score.currentScore = "200"
+                    score.currentScore = initialScore
                     val resource =
                         R.drawable.question_mark
                     for (i in 0..11) {

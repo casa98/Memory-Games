@@ -21,7 +21,8 @@ class SequenceGame(
     private var countDownInterval: Long = 500
 
     // View binding for Scores
-    private val score = Score("100", "0")
+    private val initialScore = "100"
+    private val score = Score(initialScore, "0")
 
     private var howManySquares = 2
     private var tappedSquares = 0
@@ -129,7 +130,7 @@ class SequenceGame(
                             // Score reached or less, GAME OVER
                             binding.playButton.visibility = View.VISIBLE
                             gameOverDialog()
-                            howManySquares = 1
+                            howManySquares = 2
                             updateSquaresText()
                             for (i in viewResources) {
                                 i.setBackgroundResource(R.color.tilesColor)
@@ -160,7 +161,7 @@ class SequenceGame(
 
     private fun updateSquaresText() {
         binding.invalidateAll()
-        score.currentScore = "100"
+        score.currentScore = initialScore
         score.squares = "Tap button to play"
     }
 
