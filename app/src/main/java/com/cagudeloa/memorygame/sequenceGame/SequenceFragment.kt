@@ -28,8 +28,7 @@ class SequenceFragment : BaseFragment() {
             R.layout.fragment_sequence, container, false
         )
 
-        val counter: Long = 1000
-        val sequenceGame = SequenceGame(binding, counter, activity as MainActivity)
+        val sequenceGame = SequenceGame(binding, activity as MainActivity)
         sequenceGame.setScores()
 
         binding.playButton.setOnClickListener {

@@ -59,8 +59,11 @@ class MainFragment : BaseFragment() {
     }
 
     private fun onShare() {
+        sharedPref = requireActivity().getSharedPreferences("com.cagudeloa.memorygame.score", 0)
+        val value1 = sharedPref.getString("memory", "0")
+        val value2 = sharedPref.getString("sequence", "0")
         val shareIntent = ShareCompat.IntentBuilder.from(requireActivity())
-            .setText(getString(R.string.share_text, binding.scoreView.text.toString()))
+            .setText(getString(R.string.share_text, binding.scoreView.text.toString(), value1, value2))
             .setType("text/plain")
             .intent
         try {

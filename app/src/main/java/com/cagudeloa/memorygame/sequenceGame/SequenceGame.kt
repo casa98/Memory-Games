@@ -12,13 +12,13 @@ import com.cagudeloa.memorygame.databinding.FragmentSequenceBinding
 
 class SequenceGame(
     private var binding: FragmentSequenceBinding,
-    mainCounter: Long,
     private var activity: MainActivity
 ) {
     // These 3 vars are used for the counter
-    private var initialCountDown = mainCounter
+    private val sequenceTimes = listOf(1000L, 600L, 400L, 300L, 200L, 100L)
+    private var i = 0   // How long will squares be visible
     private lateinit var countDownTimer: CountDownTimer
-    private var countDownInterval: Long = 500
+    private var countDownInterval = 50L
 
     // View binding for Scores
     private val initialScore = "100"
@@ -64,13 +64,12 @@ class SequenceGame(
         howManySquares++
         tappedSquares = 0
         binding.invalidateAll()
-        score.squares = "0 of $howManySquares"
         binding.playButton.visibility = View.INVISIBLE
         for (i in viewResources) {
             i.setBackgroundResource(R.color.tilesColor)
             i.isClickable = false
         }
-        if (howManySquares <= 15) {
+        if (howManySquares <= 12) {
             listNumbers.shuffle()
             for (i in 0 until howManySquares) {
                 viewResources[listNumbers[i]].setBackgroundResource(R.color.tileSelectedColor)
@@ -78,17 +77,21 @@ class SequenceGame(
         } else {
             // Already 20 items selected and well answered, start again
             howManySquares = 3
-            initialCountDown = 400L
+            listNumbers.shuffle()
+            if(i<5)
+                i++
+
             countDownInterval = 200L
             for (i in 0 until howManySquares) {
                 viewResources[listNumbers[i]].setBackgroundResource(R.color.tileSelectedColor)
             }
         }
+        score.squares = "0 of $howManySquares"
     }
 
     // Here I'll hide the squares after 1-2 seconds
     fun hideSquares() {
-        countDownTimer = object : CountDownTimer(initialCountDown, countDownInterval) {
+        countDownTimer = object : CountDownTimer(sequenceTimes[i], countDownInterval) {
             override fun onTick(p0: Long) {
                 for (i in viewResources) {
                     i.isClickable = false
@@ -124,13 +127,14 @@ class SequenceGame(
                         //Bad choice, mark with $numberView X
                         item.setBackgroundResource(R.drawable.x)
                         // Update score, if not leading not 0 or <0 result
-                        if ((score.currentScore.toInt() - 30) > 0) {
-                            updateScore(-30)
+                        if ((score.currentScore.toInt() - 50) > 0) {
+                            updateScore(-50)
                         } else {
                             // Score reached or less, GAME OVER
                             binding.playButton.visibility = View.VISIBLE
                             gameOverDialog()
                             howManySquares = 2
+                            i = 0
                             updateSquaresText()
                             for (i in viewResources) {
                                 i.setBackgroundResource(R.color.tilesColor)
