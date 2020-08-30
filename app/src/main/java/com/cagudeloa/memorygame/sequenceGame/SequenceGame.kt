@@ -51,7 +51,18 @@ class SequenceGame(
         binding.squareText22,
         binding.squareText23,
         binding.squareText24,
-        binding.squareText25
+        binding.squareText25,
+        binding.squareText26,
+        binding.squareText27,
+        binding.squareText28,
+        binding.squareText29,
+        binding.squareText30,
+        binding.squareText31,
+        binding.squareText32,
+        binding.squareText33,
+        binding.squareText34,
+        binding.squareText35,
+        binding.squareText36
     )
     private val listNumbers: MutableList<Int> = (viewResources.indices).toMutableList()
 
@@ -208,7 +219,18 @@ class SequenceGame(
             R.id.square_text22 -> 21
             R.id.square_text23 -> 22
             R.id.square_text24 -> 23
-            else -> 24
+            R.id.square_text25 -> 24
+            R.id.square_text26 -> 25
+            R.id.square_text27 -> 26
+            R.id.square_text28 -> 27
+            R.id.square_text29 -> 28
+            R.id.square_text30 -> 29
+            R.id.square_text31 -> 30
+            R.id.square_text32 -> 31
+            R.id.square_text33 -> 32
+            R.id.square_text34 -> 33
+            R.id.square_text35 -> 34
+            else -> 35
         }
     }
 
