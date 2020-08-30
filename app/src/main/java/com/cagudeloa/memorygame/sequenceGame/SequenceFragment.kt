@@ -23,10 +23,7 @@ class SequenceFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_sequence, container, false
-        )
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sequence, container, false)
 
         val sequenceGame = SequenceGame(binding, activity as MainActivity)
         sequenceGame.setScores()

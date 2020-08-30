@@ -26,7 +26,6 @@ class SequenceGame(
 
     private var howManySquares = 2
     private var tappedSquares = 0
-    private val listNumbers: MutableList<Int> = (0..24).toMutableList()
     private val viewResources: List<TextView> = listOf(
         binding.squareText1,
         binding.squareText2,
@@ -54,6 +53,7 @@ class SequenceGame(
         binding.squareText24,
         binding.squareText25
     )
+    private val listNumbers: MutableList<Int> = (viewResources.indices).toMutableList()
 
     fun setScores() {
         binding.score = score
@@ -69,7 +69,7 @@ class SequenceGame(
             i.setBackgroundResource(R.color.tilesColor)
             i.isClickable = false
         }
-        if (howManySquares <= 12) {
+        if (howManySquares <= (listNumbers.size/2+1)) {
             listNumbers.shuffle()
             for (i in 0 until howManySquares) {
                 viewResources[listNumbers[i]].setBackgroundResource(R.color.tileSelectedColor)
@@ -78,7 +78,7 @@ class SequenceGame(
             // Already 20 items selected and well answered, start again
             howManySquares = 3
             listNumbers.shuffle()
-            if(i<5)
+            if(i<sequenceTimes.size-1)
                 i++
 
             countDownInterval = 200L
